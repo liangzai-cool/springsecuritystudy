@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+<style>
+  span.error {
+    color: red;
+  }
+  span.msg {
+    color: green;
+  }
+</style>
+</head>
+<body>
+<form action="" method="post" onsubmit="return false;">
+  <input type="hidden" name="_csrf">
+  <label>用户名</label><input type="text" name="username">
+  <label>密码</label><input type="password" name="password">
+  <button type="submit">登录</button>
+  <div></div>
+</form>
+
+<script>
+  (function($) {
+    var $ = (selector) => document.querySelector(selector);
+    // submit
+    $('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var formData = '';
+      for (var elem of ['username', 'password', '_csrf']) {
+        var value = $('input[name="' + elem + '"]').value;
+        formData += (elem + '=' + value + '&');
+      }
+      fetch('/api/auth/login?' + formData, {credentials: 'include', method: 'POST'}).then(function(response){
+        response.json().then(function(data){
+          if (data.isOK) {
+            alert('登录成功!');
+            location.href = 'admin.html';
+          }
+        });
+      }).catch(function(error) {
+        console.info(error);
+      });
+      return false;
+    });
+    
+    // get csrf token
+    fetch('/api/auth/csrf-token', {credentials: 'include'}).then(function(r) {
+      return r.json()
+    }).then(function(response) {
+      if (response.isOK) {
+        $('form input[name="_csrf"]').value = response.msg.csrfToken;
+      }
+    });;
+  })();
+</script>
+</body>
+</html>
