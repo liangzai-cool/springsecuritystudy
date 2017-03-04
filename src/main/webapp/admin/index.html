@@ -5,8 +5,7 @@
 </head>
 <body>
   <h1>Webcome! This is Admin page!</h1>
-  <h3 class="username"></h3>
-  <h3 class="nickname"></h3>
+  <h3 class="say"></h3>
   <a class="logout" style="display:none;" href="javascript:;">Logout</a>
   <script>
   (function() {
@@ -26,9 +25,9 @@
         return r.json()
       }).then(function(response){
         if (response.isOK) {
-          var user = response.msg.user;
-          for (var key in user) {
-            $('.' + key).innerHTML = key + ': ' + user[key];
+          var msg = response.msg;
+          for (var key in msg) {
+            $('.' + key).innerHTML = msg[key];
           }
           $('.logout').style.display = 'block';
           /* alert('username: ' + user.username + '\n' + 'nickname: ' + user.nickname); */
