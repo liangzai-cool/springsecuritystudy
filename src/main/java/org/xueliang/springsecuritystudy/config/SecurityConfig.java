@@ -14,6 +14,7 @@ import org.xueliang.springsecuritystudy.security.RestAuthenticationEntryPoint;
 import org.xueliang.springsecuritystudy.security.RestAuthenticationFailureHandler;
 import org.xueliang.springsecuritystudy.security.RestAuthenticationSuccessHandler;
 import org.xueliang.springsecuritystudy.security.RestLogoutSuccessHandler;
+import org.xueliang.springsecuritystudy.service.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -28,11 +29,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${api.logout}")
     private String logoutApi = null;
     
+    @Autowired
+    private MyUserDetailsService userDetailsService;
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
         .authorizeRequests()
         .mvcMatchers(csrfTokenApi).permitAll()
+        .antMatchers("/api/user/**").access("hasAuthority('USER')")
+        .antMatchers("/api/admin/**").access("hasAuthority('ADMIN')")
+        .antMatchers("/api/dba/**").access("hasAuthority('DBA')")
         .antMatchers("/**").fullyAuthenticated()
         .and()
         .formLogin()
@@ -42,7 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .logout()
         .logoutRequestMatcher(new AntPathRequestMatcher(logoutApi))
-//        .logoutSuccessUrl("/index.html")
         .logoutSuccessHandler(new RestLogoutSuccessHandler())
         .and()
         .exceptionHandling()
@@ -52,9 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("root123").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("dba").password("root123").roles("ADMIN","DBA");
+        auth.userDetailsService(userDetailsService);
     }
     
     public CsrfSecurityRequestMatcher csrfSecurityRequestMatcher() {

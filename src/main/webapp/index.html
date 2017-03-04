@@ -36,8 +36,10 @@
         response.json().then(function(data){
           if (data.isOK) {
             alert('登录成功!');
-            location.href = 'admin.html';
+            location.href = 'welcome.html';
+            return;
           }
+          alert('用户名或密码有误!');
         });
       }).catch(function(error) {
         console.info(error);

@@ -1,6 +1,7 @@
 package org.xueliang.springsecuritystudy.security;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.xueliang.springsecuritystudy.DefaultException;
+import org.xueliang.springsecuritystudy.model.JSONResponse;
 
 public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
@@ -19,7 +22,11 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
         LOGGER.info("auth failure!");
-        // TODO Auto-generated method stub
-        super.onAuthenticationFailure(request, response, exception);
+        JSONResponse jsonResponse = new JSONResponse();
+        jsonResponse.addError(DefaultException.Error.invalid_parameter.name(), exception.getMessage());
+        PrintWriter printWriter = response.getWriter();
+        printWriter.write(jsonResponse.toString());
+        printWriter.flush();
+        printWriter.close();
     }
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WELCOME!</title>
+</head>
+<body>
+<a href="user/index.html">USER</a>
+<a href="admin/index.html">ADMIN</a>
+<a href="dba/index.html">DBA</a>
+<script>
+fetch('/api/auth/whoami', {credentials: 'include'}).then(function(r) {
+    return r.json();
+  }).then(function(response) {
+    if (!response.isOK) {
+    	alert('请登录!');
+    	location.href = '/index.html';
+    }
+  })
+</script>
+</body>
+</html>

@@ -22,7 +22,7 @@
     }).then(function() {
       
       // 获取管理员信息
-      fetch('/api/auth/admin?_csrf=' + token, {credentials: 'include', method: 'POST'}).then(function(r){
+      fetch('/api/admin/?_csrf=' + token, {credentials: 'include', method: 'POST'}).then(function(r){
         return r.json()
       }).then(function(response){
         if (response.isOK) {
@@ -34,7 +34,7 @@
           /* alert('username: ' + user.username + '\n' + 'nickname: ' + user.nickname); */
         } else {
           alert('拒绝访问!');
-          location.href = 'index.html';
+          location.href = '../welcome.html';
         }
       }).catch(function(error) {
         console.info(error);
