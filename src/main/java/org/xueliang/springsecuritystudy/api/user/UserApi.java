@@ -15,9 +15,9 @@ import org.xueliang.springsecuritystudy.model.JSONResponse;
 public class UserApi extends BaseApi {
 
     @RequestMapping({"", "/"})
-    public String visiteAdmin() {
+    public JSONResponse visiteAdmin() {
         JSONResponse jsonResponse = new JSONResponse();
         jsonResponse.addMsg("say", "this comes from user api");
-        return jsonResponse.toString();
+        return jsonResponse;
     }
 }

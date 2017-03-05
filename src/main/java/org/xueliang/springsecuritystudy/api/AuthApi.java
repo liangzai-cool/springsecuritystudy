@@ -13,19 +13,19 @@ import org.xueliang.springsecuritystudy.model.JSONResponse;
 public class AuthApi extends BaseApi {
     
     @RequestMapping(value="csrf-token")
-    public String getCsrfToken(HttpServletRequest request) {
+    public JSONResponse getCsrfToken(HttpServletRequest request) {
         JSONResponse jsonResponse = new JSONResponse();
         CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         String token = csrfToken.getToken();
         jsonResponse.addMsg("csrfToken", token);
-        return jsonResponse.toString();
+        return jsonResponse;
     }
     
     @RequestMapping("whoami")
-    public String whoami() {
+    public JSONResponse whoami() {
         JSONResponse jsonResponse = new JSONResponse();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         jsonResponse.addMsg("username", username);
-        return jsonResponse.toString();
+        return jsonResponse;
     }
 }

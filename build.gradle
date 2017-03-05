@@ -66,6 +66,7 @@ dependencies {
   compile "org.apache.logging.log4j:log4j-api:$log4jVersion"
 
   compile "org.json:json:20160810"
+  compile "com.fasterxml.jackson.core:jackson-databind:2.9.0.pr1"
 
   testCompile 'junit:junit:4.12'
 }

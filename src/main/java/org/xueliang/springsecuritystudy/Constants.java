@@ -14,7 +14,7 @@ public class Constants {
         {
             User user = new User();
             user.setUsername("myuser");
-            user.setPassword("myuserpass");
+            user.setPassword("$2a$10$r6V8qEOWr.4TZxdMCNRweOfeD3uxhEMd3Ey7obEhJsh7F53S3c8l6");   // myuserpass
             user.setAuthorities(new ArrayList<Authority>(){
                 private static final long serialVersionUID = 1L;
                 {
@@ -24,7 +24,7 @@ public class Constants {
             
             User admin = new User();
             admin.setUsername("myadmin");
-            admin.setPassword("myadminpass");
+            admin.setPassword("$2a$10$UoD6b1MX7cTKwPjia34n4eJ1Q7eD4c.rBFbM826tPdqGWs/bh5Xfm");  // myadminpass
             admin.setAuthorities(new ArrayList<Authority>(){
                 private static final long serialVersionUID = 1L;
                 {
@@ -34,7 +34,7 @@ public class Constants {
             
             User dba = new User();
             dba.setUsername("mydba");
-            dba.setPassword("mydba");
+            dba.setPassword("$2a$10$31Vufh14KaO40xqRKlJvkeBIboOtPNjqJdKXJuEuxAjMwCqhECL8a");    // mydbapass
             dba.setAuthorities(new ArrayList<Authority>(){
                 private static final long serialVersionUID = 1L;
                 {

@@ -23,5 +23,4 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("用户不存在！");
     }
-
 }
