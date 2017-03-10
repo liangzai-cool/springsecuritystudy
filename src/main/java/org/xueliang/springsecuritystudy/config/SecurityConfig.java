@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().formLogin().loginProcessingUrl(loginApi)
         .successHandler(new RestAuthenticationSuccessHandler())
         .failureHandler(new RestAuthenticationFailureHandler())
+        .and().rememberMe().rememberMeParameter("remember").rememberMeCookieName("remember")
         .and().logout().logoutUrl(logoutApi)
         .logoutSuccessHandler(new RestLogoutSuccessHandler())
         .and().exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())

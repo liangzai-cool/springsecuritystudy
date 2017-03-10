@@ -17,6 +17,7 @@
   <input type="hidden" name="_csrf">
   <label>用户名</label><input type="text" name="username">
   <label>密码</label><input type="password" name="password">
+  <label>记住我</label><input type="checkbox" name="remember">
   <button type="submit">登录</button>
   <div></div>
 </form>
@@ -28,9 +29,9 @@
     $('form').addEventListener('submit', function(event) {
       event.preventDefault();
       var formData = '';
-      for (var elem of ['username', 'password', '_csrf']) {
+      for (var elem of ['username', 'password', 'remember', '_csrf']) {
         var $param = $('input[name="' + elem + '"]');
-        var value = $param.value;
+        var value = $param.getAttribute('name') == 'remember' ? $param.checked : $param.value;
         formData += (elem + '=' + value + '&');
       }
       fetch('/api/auth/login?' + formData, {credentials: 'include', method: 'POST'}).then(function(response){
