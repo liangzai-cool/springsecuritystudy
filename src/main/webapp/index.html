@@ -29,7 +29,8 @@
       event.preventDefault();
       var formData = '';
       for (var elem of ['username', 'password', '_csrf']) {
-        var value = $('input[name="' + elem + '"]').value;
+        var $param = $('input[name="' + elem + '"]');
+        var value = $param.value;
         formData += (elem + '=' + value + '&');
       }
       fetch('/api/auth/login?' + formData, {credentials: 'include', method: 'POST'}).then(function(response){

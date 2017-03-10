@@ -19,9 +19,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy("springSecurityFilterChain")).addMappingForUrlPatterns(null, false, "/api/*");
+        servletContext.addFilter("springSecurityFilterChain", new DelegatingFilterProxy("springSecurityFilterChain"))
+        .addMappingForUrlPatterns(null, false, "/api/*");
+        
         // 静态资源映射
-        servletContext.getServletRegistration("default").addMapping("*.html", "*.ico");
+        servletContext.getServletRegistration("default").addMapping("/static/*", "*.html", "*.ico");
         super.onStartup(servletContext);
     }
 

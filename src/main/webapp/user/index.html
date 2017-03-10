@@ -3,54 +3,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>User page</title>
 </head>
-<body>
+<body data-api="/api/user/">
   <h1>Webcome! This is User page!</h1>
   <h3 class="say"></h3>
   <a class="logout" style="display:none;" href="javascript:;">Logout</a>
-  <script>
-  (function() {
-    var $ = (selector) => document.querySelector(selector);
-    // get csrf token
-    var token  = '';
-    fetch('/api/auth/csrf-token', {credentials: 'include'}).then(function(r) {
-      return r.json();
-    }).then(function(response) {
-      if (response.isOK) {
-        token = response.msg.csrfToken;
-      }
-    }).then(function() {
-      
-      // 获取管理员信息
-      fetch('/api/user/?_csrf=' + token, {credentials: 'include', method: 'POST'}).then(function(r){
-        return r.json()
-      }).then(function(response){
-        if (response.isOK) {
-          var msg = response.msg;
-          for (var key in msg) {
-            $('.' + key).innerHTML = msg[key];
-          }
-          $('.logout').style.display = 'block';
-          /* alert('username: ' + user.username + '\n' + 'nickname: ' + user.nickname); */
-        } else {
-          alert('拒绝访问!');
-          location.href = '../welcome.html';
-        }
-      }).catch(function(error) {
-        console.info(error);
-      });
-      
-      $('.logout').addEventListener('click', function(event) {
-        fetch('/api/auth/logout?_csrf=' + token, {credentials: 'include', method: 'POST'}).then(function(r){
-          return r.json();
-        }).then(function(response) {
-          if (response.isOK) {
-            alert('退出登录成功!');
-            location.href = '/index.html';
-          }
-        });
-      });
-    });
-  })();
-  </script>
+  <script src="/static/js/common.js"></script>
 </body>
 </html>
