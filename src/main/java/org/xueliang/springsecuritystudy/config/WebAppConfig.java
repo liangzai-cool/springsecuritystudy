@@ -21,7 +21,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class WebAppConfig extends WebMvcConfigurerAdapter {
     
     @Bean
-    public RequestMappingHandlerAdapter requestMappingHandlerAdapter(@Autowired MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter, @Autowired ContentNegotiationManager mvcContentNegotiationManager) {
+    @Autowired
+    public RequestMappingHandlerAdapter requestMappingHandlerAdapter(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter, ContentNegotiationManager mvcContentNegotiationManager) {
         RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
         requestMappingHandlerAdapter.setMessageConverters(Collections.singletonList(mappingJackson2HttpMessageConverter));
         requestMappingHandlerAdapter.setContentNegotiationManager(mvcContentNegotiationManager);
