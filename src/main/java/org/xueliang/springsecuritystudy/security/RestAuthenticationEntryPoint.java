@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.xueliang.springsecuritystudy.DefaultException;
 import org.xueliang.springsecuritystudy.model.JSONResponse;
@@ -25,12 +27,16 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private static final Logger LOGGER = LogManager.getLogger(RestAuthenticationEntryPoint.class);
     
+    protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
+    
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
         LOGGER.warn("Authentication Failed: " + authException.getMessage());
         JSONResponse jsonResponse = new JSONResponse();
-        jsonResponse.addError(DefaultException.Error.invalid_parameter.name(), authException.getMessage());
+        jsonResponse.addError(DefaultException.Error.invalid_parameter.name(), messages.getMessage("AbstractAccessDecisionManager.accessDenied"));
+        response.addHeader("Content-type", "application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter printWriter = response.getWriter();
         printWriter.write(jsonResponse.toString());
         printWriter.flush();

@@ -24,6 +24,8 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
         LOGGER.info("auth failure!");
         JSONResponse jsonResponse = new JSONResponse();
         jsonResponse.addError(DefaultException.Error.invalid_parameter.name(), exception.getMessage());
+        response.addHeader("Content-type", "application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter printWriter = response.getWriter();
         printWriter.write(jsonResponse.toString());
         printWriter.flush();

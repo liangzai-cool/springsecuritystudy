@@ -4,6 +4,7 @@ import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -24,6 +25,8 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         
         // 静态资源映射
         servletContext.getServletRegistration("default").addMapping("/static/*", "*.html", "*.ico");
+        
+        servletContext.addListener(HttpSessionEventPublisher.class);
         super.onStartup(servletContext);
     }
 

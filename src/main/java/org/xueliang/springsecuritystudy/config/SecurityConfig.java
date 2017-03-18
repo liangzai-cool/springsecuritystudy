@@ -48,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .successHandler(new RestAuthenticationSuccessHandler())
         .failureHandler(new RestAuthenticationFailureHandler())
         .and().rememberMe().rememberMeParameter("remember").rememberMeCookieName("remember")
-        .and().logout().logoutUrl(logoutApi)
-        .logoutSuccessHandler(new RestLogoutSuccessHandler())
+        .and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true)
+        .and().and().logout().logoutUrl(logoutApi).logoutSuccessHandler(new RestLogoutSuccessHandler())
+        .deleteCookies( "JSESSIONID" ).invalidateHttpSession(true)
         .and().exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
         .accessDeniedHandler(new RestAccessDeniedHandler());
     }

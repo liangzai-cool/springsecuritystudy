@@ -13,7 +13,11 @@ fetch('/api/auth/whoami', {credentials: 'include'}).then(function(r) {
     return r.json();
   }).then(function(response) {
     if (!response.isOK) {
-    	alert('请登录!');
+      var errors = [];
+      for (var key in response.error) {
+        errors.push(response.error[key]);
+      }
+      alert(errors.join('\n'));
     	location.href = '/index.html';
     }
   })

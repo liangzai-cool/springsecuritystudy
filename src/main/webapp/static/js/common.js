@@ -23,7 +23,11 @@
           $('.logout').style.display = 'inline';
           /* alert('username: ' + user.username + '\n' + 'nickname: ' + user.nickname); */
         } else {
-          alert('拒绝访问!');
+          var errors = [];
+          for (var key in response.error) {
+            errors.push(response.error[key]);
+          }
+          alert(errors.join('\n'));
           location.href = '/welcome.html';
         }
       }).catch(function(error) {

@@ -41,7 +41,11 @@
             location.href = 'welcome.html';
             return;
           }
-          alert('用户名或密码有误!');
+          var errors = [];
+          for (var key in data.error) {
+            errors.push(data.error[key]);
+          }
+          alert(errors.join('\n'));
         });
       }).catch(function(error) {
         console.info(error);

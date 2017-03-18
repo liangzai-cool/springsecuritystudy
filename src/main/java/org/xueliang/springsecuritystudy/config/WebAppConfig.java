@@ -1,12 +1,16 @@
 package org.xueliang.springsecuritystudy.config;
 
 import java.util.Collections;
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,6 +24,11 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @PropertySource({"classpath:config.properties"})
 public class WebAppConfig extends WebMvcConfigurerAdapter {
     
+    @PostConstruct
+    public void init() {
+        Locale.setDefault(Locale.SIMPLIFIED_CHINESE);
+    }
+    
     @Bean
     @Autowired
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter(MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter, ContentNegotiationManager mvcContentNegotiationManager) {
@@ -32,6 +41,15 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         return new MappingJackson2HttpMessageConverter();
+    }
+    
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:org/springframework/security/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
     }
     
     /**
